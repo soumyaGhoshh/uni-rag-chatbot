@@ -1,0 +1,26 @@
+[
+  {
+    "date": "2026-03-24",
+    "block": "Block 1",
+    "floor": "2",
+    "room": "204B",
+    "student_id": "ST2026001",
+    "student_name": "Aman Shrivastava",
+    "condition": "Acute Viral Fever",
+    "temperature": "103 F",
+    "action": "Isolation Protocol Active",
+    "contact": "+91 9876543210"
+  },
+  {
+    "date": "2026-03-24",
+    "block": "Block 2",
+    "floor": "3",
+    "room": "301D",
+    "student_id": "ST2026045",
+    "student_name": "Rohan Das",
+    "condition": "High Fever, Nausea",
+    "temperature": "101.5 F",
+    "action": "Investigating",
+    "contact": "+91 9998887776"
+  }
+]
