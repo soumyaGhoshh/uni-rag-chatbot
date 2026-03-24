@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-03-25",
+    "block": "Block 3",
+    "indicator": "Health Alert",
+    "summary": "A student from Block 3 presented with a severe rash and mild fever, possibly an allergic reaction. Precautions are being taken.",
+    "is_crisis": false,
+    "official_verdict": "No official outbreak, just a single allergy case. Students should not panic about measles or chicken pox rumors."
+  },
+  {
     "date": "2024-03-24",
     "block": "Block 1",
     "indicator": "Health Alert",

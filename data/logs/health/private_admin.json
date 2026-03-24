@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-03-25",
+    "block": "Block 3",
+    "floor": "N/A",
+    "room": "102C",
+    "student_id": "ST2026112",
+    "student_name": "Sneha Patel",
+    "condition": "Severe rash and mild fever. Possible allergic reaction.",
+    "temperature": "N/A",
+    "action": "Prescribed antihistamines and told her to stay in room 102C for observation for the next 24 hours.",
+    "contact": "N/A"
+  },
+  {
     "date": "2026-03-24",
     "block": "Block 1",
     "floor": "2",

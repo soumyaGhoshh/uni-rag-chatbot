@@ -33,6 +33,9 @@ class ChatRequest(BaseModel):
     message: str
     role: str = "student" # Default role
 
+class IngestRequest(BaseModel):
+    text_content: str
+
 def get_logs(role: str):
     """
     Robustly scans DATA_DIR/logs for JSON files.
@@ -98,6 +101,77 @@ async def chat(request: ChatRequest):
     except Exception as e:
         print(f"Error calling Gemini: {str(e)}")
         raise HTTPException(status_code=500, detail="AI response failed.")
+
+@app.post("/ingest")
+async def ingest_document(req: IngestRequest):
+    if not api_key:
+        raise HTTPException(status_code=500, detail="Gemini API Key missing.")
+    
+    prompt = f"""
+    You are an AI document processor for a university operations dashboard.
+    Read the following RAW TEXT REPORT and extract the information into TWO structured JSON objects.
+
+    RAW TEXT:
+    {req.text_content}
+
+    TASK:
+    Output pure JSON matching exactly this schema, with no markdown code blocks starting with ```json:
+    {{
+      "public": {{
+        "date": "YYYY-MM-DD",
+        "block": "Block name/number",
+        "indicator": "Health Alert or Mess Quality or Water",
+        "summary": "Brief, summary (no names, no IDs).",
+        "is_crisis": false,
+        "official_verdict": "Clear message debunking rumors or preventing panic"
+      }},
+      "private": {{
+        "date": "YYYY-MM-DD",
+        "block": "Block name/number",
+        "floor": "",
+        "room": "",
+        "student_id": "",
+        "student_name": "",
+        "condition": "",
+        "temperature": "",
+        "action": "",
+        "contact": ""
+      }}
+    }}
+    
+    If data is missing for a field, put "N/A". Ensure valid JSON structure.
+    """
+
+    try:
+        model = genai.GenerativeModel('gemini-2.0-flash')
+        response = model.generate_content(prompt)
+        clean_text = response.text.replace('```json', '').replace('```', '').strip()
+        parsed_data = json.loads(clean_text)
+        
+        # public
+        public_file = DATA_DIR / "public_status.json"
+        public_logs = []
+        if public_file.exists():
+            with open(public_file, "r") as f:
+                public_logs = json.load(f)
+        public_logs.insert(0, parsed_data["public"])
+        with open(public_file, "w") as f:
+            json.dump(public_logs, f, indent=2)
+
+        # private
+        private_file = DATA_DIR / "health" / "private_admin.json"
+        private_logs = []
+        if private_file.exists():
+            with open(private_file, "r") as f:
+                private_logs = json.load(f)
+        private_logs.insert(0, parsed_data["private"])
+        with open(private_file, "w") as f:
+            json.dump(private_logs, f, indent=2)
+
+        return {"status": "success", "message": "Document ingested and knowledge base updated."}
+    except Exception as e:
+        print(f"Ingest Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to parse document.")
 
 if __name__ == "__main__":
     import uvicorn
