@@ -1,29 +1,29 @@
-# UniGuard Campus Intelligence System 🏛️
+# UniGuard Campus Intelligence System
 
 **An AI-Powered Operations and Crisis Management Dashboard for University Administrators.**
 
 UniGuard is an intelligent campus governance platform that automatically ingests unstructured reports (text logs and doctor's daily Excel sheets), structures them into a privacy-first, two-tier database, and acts as a dynamic conversational AI for both students and administrators.
 
-## 🌟 Key Features for Exhibition
+## Key Features for Exhibition
 
-### 1. 🧠 Neural Document Ingestion
+### 1. Neural Document Ingestion
 Instead of manual data entry, UniGuard uses an AI pipeline (`gemini-2.0-flash`) to parse messy, unstructured daily reports (Text files and daily `.xlsx` doctor sheets).
 - **Auto-Structuring:** Extracts symptoms, medication, location, and dates from natural language or spreadsheets.
 - **Drop-Zone Processing:** A dedicated `data/daily_excels/` folder acts as an automated ingestion workflow. 
 
-### 2. 🔐 Privacy-First Data Segregation (Two-Tier DB)
+### 2. Privacy-First Data Segregation (Two-Tier DB)
 When processing documents, the system automatically creates two versions of the data:
 - **Public Layer (`public_status.json`)**: Anonymized, abstract summaries designed to prevent panic and debunk rumors (e.g., "A student in Block 3 has an allergy, it is not measles").
 - **Private Layer (`private_admin.json`)**: Highly confidential records containing PII (Names, Student IDs, Room numbers, and Medical history) reserved exclusively for Admin staff.
 
-### 3. 🛡️ Role-Based AI Chatbot
+### 3. Role-Based AI Chatbot
 The system features a dynamic chat interface with context-aware permissions:
 - **Student Mode:** Acts as a Campus Transparency AI. Reassures students, debunks rumors using the Public database, and strictly blocks any leakage of student identities.
 - **Admin Mode:** Acts as a Crisis Command Center. Has full clearance across all databases to provide exact room numbers, patient IDs, and protocol actionable intelligence.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 - **Frontend (`client/`)**: A modern React application (Vite) featuring a responsive dashboard and chat interface.
 - **Backend (`server/`)**: A FastAPI Python server handling document ingestion APIs, file watching, and the Gemini AI conversational logic.
@@ -31,7 +31,7 @@ The system features a dynamic chat interface with context-aware permissions:
 
 ---
 
-## 🚀 How to Demo This to Your Supervisor
+## How to Demo This to Your Supervisor
 
 Here is exactly how you should walk your supervisor through the project during the exhibition:
 
@@ -57,7 +57,7 @@ Here is exactly how you should walk your supervisor through the project during t
 
 ---
 
-## 💻 Tech Stack Setup
+## Tech Stack Setup
 
 ### Backend (Server)
 Run this in a terminal to start the AI API:
